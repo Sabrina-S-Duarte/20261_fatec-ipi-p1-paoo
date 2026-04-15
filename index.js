@@ -52,10 +52,32 @@ const url = 'https://api.open-meteo.com/v1/forecast' +
         console.log(`Temperatura: ${temp}°C\n`);
         console.log(`Vento: ${vento} km/h\n`);
         console.log(`Sensação Térmica: ${sensacao}°C\n`);
-        console.log("******************************");
+        console.log("******************************\n");
 
     } catch (error) {
         console.error("Erro ao conectar com a API.");
     }
 }
+async function pesquisaCidade(cidade) {
+  const url = `https://pt.wikipedia.org/api/rest_v1/page/summary/${cidade}`;
 
+  console.log('Buscando resumo na Wikipédia...');
+
+  try {
+    const res = await axios.get(url, { 
+      headers: { 'User-Agent': 'Raph' }
+    });
+
+    const nome = res.data.title;
+    const resumo = res.data.extract;
+
+    console.log('---Informações da Wikipédia---');
+    console.log('Nome: ' + nome);
+    console.log(`Resumo: ${resumo}`);
+    console.log('-----------------------------------\n');
+    return { nome, resumo };
+
+  } catch (erro) {
+    console.log('Erro ao buscar cidade na Wiki:', erro.message);
+  }
+}
