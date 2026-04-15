@@ -1,5 +1,4 @@
 
-require('dotenv').config();
 const axios = require('axios');
 
 
@@ -21,7 +20,7 @@ function buscarCoord(nomeCidade) {
             console.log(`Cidade: ${nome}`);
             console.log(`Latitude: ${lat}`);
             console.log(`Longitude: ${lon}`);
-            console.log("****************************");
+            console.log("****************************\n");
 
             return { lat, lon, nome };
         })
@@ -49,9 +48,9 @@ const url = 'https://api.open-meteo.com/v1/forecast' +
 
         console.log("****************************");
         console.log("Relatório do Tempo\n");
-        console.log(`Temperatura: ${temp}°C\n`);
-        console.log(`Vento: ${vento} km/h\n`);
-        console.log(`Sensação Térmica: ${sensacao}°C\n`);
+        console.log(`Temperatura: ${temp}°C`);
+        console.log(`Vento: ${vento} km/h`);
+        console.log(`Sensação Térmica: ${sensacao}°C`);
         console.log("******************************\n");
 
     } catch (error) {
@@ -61,7 +60,7 @@ const url = 'https://api.open-meteo.com/v1/forecast' +
 async function pesquisaCidade(cidade) {
   const url = `https://pt.wikipedia.org/api/rest_v1/page/summary/${cidade}`;
 
-  console.log('Buscando resumo na Wikipédia...');
+  console.log('Buscando resumo na Wikipédia...\n');
 
   try {
     const res = await axios.get(url, { 
@@ -73,7 +72,7 @@ async function pesquisaCidade(cidade) {
 
     console.log('---Informações da Wikipédia---');
     console.log('Nome: ' + nome);
-    console.log(`Resumo: ${resumo}`);
+    console.log(`\nResumo: ${resumo}`);
     console.log('-----------------------------------\n');
     return { nome, resumo };
 
