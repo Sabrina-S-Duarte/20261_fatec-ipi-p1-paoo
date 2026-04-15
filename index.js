@@ -1,6 +1,37 @@
+
+require('dotenv').config();
 const axios = require('axios');
 
-//minha parte - item 2:
+
+function buscarCoord(nomeCidade) {
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(nomeCidade)}&count=1&language=pt&format=json`;
+
+    return axios.get(url)
+        .then(res => res.data)
+        .then(data => {
+            if (!data.results || data.results.length === 0) {
+                throw new Error('Cidade não encontrada.');
+            }
+            const cidade = data.results[0];
+            const nome = cidade.name;
+            const lat = cidade.latitude;
+            const lon = cidade.longitude;
+
+            console.log("****************************");
+            console.log(`Cidade: ${nome}`);
+            console.log(`Latitude: ${lat}`);
+            console.log(`Longitude: ${lon}`);
+            console.log("****************************");
+
+            return { lat, lon, nome };
+        })
+        .catch(error => {
+            console.error("Erro ao buscar coordenadas:", error.message);
+            throw error;
+        });
+}
+
+
 async function obterPrevisao(lat, lon) {
     
 
@@ -27,3 +58,4 @@ const url = 'https://api.open-meteo.com/v1/forecast' +
         console.error("Erro ao conectar com a API.");
     }
 }
+
