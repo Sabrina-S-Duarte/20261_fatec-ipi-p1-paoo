@@ -81,3 +81,20 @@ async function pesquisaCidade(cidade) {
     console.log('Erro ao buscar cidade na Wiki:', erro.message);
   }
 }
+
+
+const cidade = process.argv[2];
+if (!cidade) {
+    console.error('Digite o nome da cidade:\n');
+    process.exit(1);
+}
+
+console.log(`Consultando dados para: ${cidade}\n`);
+
+buscarCoord(cidade)
+    .then(coordenadas => obterPrevisao(coordenadas.lat, coordenadas.lon))
+    .then(() => pesquisaCidade(cidade))
+    .catch(erro => {
+        console.error('\nFalha geral:', erro.message);
+        process.exit(1);
+    });
